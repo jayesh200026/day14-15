@@ -1,0 +1,29 @@
+{
+"inventory":[
+{
+"type": "rice",
+"name": "royal",
+"weight": 12.6,
+"pricePerWeight": 79.0
+},
+{
+"type": "rice",
+"name": "bhasmati",
+"weight": 7.6,
+"pricePerWeight": 116.0
+},
+{
+"type": "wheat",
+"name": "punjabi",
+"weight": 30.0,
+"pricePerWeight": 41.0
+},
+{
+"type": "pulse",
+"name": "eastern",
+"weight": 20.0,
+"pricePerWeight": 45.0
+}
+
+]
+}
