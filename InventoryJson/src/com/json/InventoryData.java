@@ -96,6 +96,7 @@ public class InventoryData {
 			FileWriter writer = new FileWriter("/Users/jayeshkumar/learning_path/BATCH51/oop/InventoryJson/data/result.json");
 			writer.write(mainObject.toJSONString());
 			writer.flush();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
