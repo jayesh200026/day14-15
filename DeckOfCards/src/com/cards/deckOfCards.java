@@ -11,17 +11,17 @@ public class deckOfCards {
 		
 		for(int i=0;i<suits.length;i++) {
 			for(int j=0;j<rank.length;j++) {
-				card[rank.length*i+j]=rank[j]+ "" +suits[i];
+				card[rank.length*i+j]=rank[j]+ " of " +suits[i];
 			}
 		}
 		//System.out.println(card.length);
-		
+		String temp;
 		for(int i=0;i<card.length;i++) {
 			int randomValue= (int)(Math.random() * card.length);
 			for(int j=0;j<card.length;j++) {
-				card[i]=card[j];
+				temp=card[j];
 				card[j]=card[randomValue];
-				card[randomValue]=card[i];
+				card[randomValue]=temp;
 			}
 		}
 		
