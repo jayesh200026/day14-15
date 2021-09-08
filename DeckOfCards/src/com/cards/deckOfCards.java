@@ -26,14 +26,29 @@ public class deckOfCards {
 		}
 		
 		int k=0;
+		String disp[][] = new String[4][9];
+		
+		for(int i=0;i<4;i++) {
+			//System.out.println("Player ::"+(i+1));
+			for(int j=0;j<9;j++) {
+				//System.out.print("["+card[k]+"]");
+				disp[i][j]=card[k];
+				
+				k++;
+			}
+			
+		}
 		for(int i=0;i<4;i++) {
 			System.out.println("Player ::"+(i+1));
 			for(int j=0;j<9;j++) {
-				System.out.print("["+card[k]+"]");
-				k++;
+				System.out.print("["+disp[i][j]+"]");
+				
 			}
 			System.out.println();
+			
 		}
+		
+		
 	}
 
 }
