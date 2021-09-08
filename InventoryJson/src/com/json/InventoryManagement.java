@@ -1,74 +1,39 @@
 package com.json;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
 import org.json.simple.parser.ParseException;
 
 public class InventoryManagement {
-
-	public static void main(String[] args) {
+	static Map<String,Double> map = new HashMap<>();
+	public static void inventoryManager() {
+		List<JSONObject> list = inventoryFactory();
 		
-		JSONObject object1 = new JSONObject();
-		JSONObject object2 = new JSONObject();
-		JSONParser parser = new JSONParser();
-		Map<String,Double> map = new HashMap<>();
-		try {
-			Reader reader = new FileReader("/Users/jayeshkumar/learning_path/BATCH51/oop/InventoryJson/data/inventory.json");
-			
-			
-			JSONArray array =  new JSONArray();
-			
-			object1= (JSONObject) parser.parse(reader);
-			array =(JSONArray) object1.get("inventory");
-			Iterator<JSONObject> iterator = array.iterator();
-			while(iterator.hasNext()) {
-				//System.out.println(iterator.next());
-				object2=(JSONObject)iterator.next();
-				String name=(String) object2.get("name");
-				String type=(String) object2.get("type");
-				double weight=(double) object2.get("weight");
-				Double pricePerWeight = (Double) object2.get("pricePerWeight");
-				map.put(name, weight*pricePerWeight);
-				
-			}
-			
-			System.out.println(map);
-			//System.out.println(object1);
-			//System.out.println(array);
-			
-		} catch (FileNotFoundException e) {
-			System.out.println(e);
-			
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println(e);
-		
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
+		for(JSONObject obj : list) {
+			String type=(String) obj.get("type");
+			String name=(String) obj.get("name");
+			double weight=(double) obj.get("weight");
+			double pricePerWeight = (double) obj.get("pricePerWeight");
+			double totalPrice = pricePerWeight*weight;
+			map.put(name, totalPrice);
 		}
-		//System.out.println("hello");
 		
-		writeToJson(map);
-
+		displayJSON();
+		
 	}
-
-	private static void writeToJson(Map<String, Double> map) {
-		
-		
+	private static void displayJSON() {
 		JSONArray array =  new JSONArray();
 		for (String s: map.keySet()) {
 			//object1 = new JSONObject();
@@ -77,31 +42,41 @@ public class InventoryManagement {
 			object1.put("Totalprice",map.get(s));
 			array.add(object1);
 		}
-		System.out.println(array);
+		//System.out.println(array);
 		JSONObject mainObject =  new JSONObject();
 		mainObject.put("Result", array);
-		System.out.println(mainObject);
+		System.out.println(mainObject.toJSONString());
 		
+	}
+	private static List<JSONObject> inventoryFactory() {
+	
+		List<JSONObject> list = new ArrayList<JSONObject>();
+		JSONParser parser = new JSONParser();
 		try {
-			File file = new File("/Users/jayeshkumar/learning_path/BATCH51/oop/InventoryJson/data/result.json");
-			
-			if(file.createNewFile()) {
-				
+			Reader reader = new FileReader("/Users/jayeshkumar/learning_path/BATCH51/oop/InventoryJson/data/inventory.json");
+			JSONObject inventory = (JSONObject) parser.parse(reader);
+			JSONArray array= (JSONArray) inventory.get("inventory");
+			Iterator<JSONObject> iterator = array.iterator();
+			while(iterator.hasNext()) {
+				JSONObject object2=iterator.next();
+				list.add(object2);
 			}
-			else {
-				System.out.println("already file exits");
-			}
 			
-			FileWriter writer = new FileWriter("/Users/jayeshkumar/learning_path/BATCH51/oop/InventoryJson/data/result.json");
-			writer.write(mainObject.toJSONString());
-			writer.flush();
+			
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-	}
-	
 		
+		
+		return list;
+	}
+	public static void main(String args[]) {
+		InventoryManagement.inventoryManager();
+	}
 
 }
-
